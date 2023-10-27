@@ -3,15 +3,82 @@ System Modules:
     command: Execute arbitrary shell commands on targets.
     shell: Execute commands in a shell on targets.
     copy: Copy files to remote hosts.
-    file: Manage files and file properties on remote hosts.
-    template: Template a file out to a remote server.
+    file: Manage files and file properties on remote hosts.(used to creating and deleting the file or multiple file)
     yum/apt/dnf/zypper: Package managers for various Linux distributions.
     user/group: Manage user accounts and groups.
     service: Manage services (start, stop, restart, etc.).
     cron: Manage cron jobs on remote systems.
-    The Lineinfile / Replace Modules
+    Lineinfile-->for one line or (Manage lines in text files)
+    Replace Modules-->for multiple lines
     unarchive -->extract the contents of archive files such as tar or zip files. By default, it copies the archive file from the control node to the target machine before 
     extracting it.Change this behavior by providing the parameter remote_src: yes.
 
     examp
-    
+  - name: Extract contents of app.tar.gz
+    unarchive:
+      src: /tmp/app.tar.gz
+      dest: /app
+      remote_src: yes
+
+ Template module is used to copy a configuration file from the local system to the host server. It is the same as the copy module, but it dynamically binds group 
+ variables defined by us. So it depends of your need but basically if you need to configure variables in the pushed file, use "template".
+
+
+==============================================================
+In Ansible, modules are categorized into different types based on the tasks they perform. Here are the main types of modules in Ansible:
+
+### 1. **Command Modules:**
+   - Execute arbitrary shell commands on the target system.
+   - Example: `command`, `shell`, `raw`.
+
+### 2. **Script Modules:**
+   - Run scripts (Bash, Python, Perl, etc.) on the target system.
+   - Example: `script`, `command_script`.
+
+### 3. **File Modules:**
+   - Manage files and directories on the target system.
+   - Example: `copy`, `file`, `template`, `assemble`, `synchronize`.
+
+### 4. **System Modules:**
+   - Manage system-related configurations and services.
+   - Example: `user`, `group`, `service`, `hostname`, `timezone`, `yum`, `apt`, `dnf`, `zypper`.
+
+### 5. **Packaging Modules:**
+   - Manage packages and software on the target system.
+   - Example: `yum`, `apt`, `dnf`, `zypper`, `pip`, `gem`.
+
+### 6. **Database Modules:**
+   - Manage databases and database users.
+   - Example: `mysql_db`, `postgresql_db`, `mongodb_user`.
+
+### 7. **Network Modules:**
+   - Manage network configurations.
+   - Example: `ios_command`, `nxos_command`, `cisco_bgp`, `nmcli`.
+
+### 8. **Cloud Modules:**
+   - Interact with cloud service providers to manage cloud resources.
+   - Example: `ec2`, `gce`, `azure_rm`, `digital_ocean`.
+
+### 9. **Containerization Modules:**
+   - Manage containers and container orchestration platforms.
+   - Example: `docker_container`, `docker_image`, `k8s`.
+
+### 10. **Security Modules:**
+   - Manage security-related configurations.
+   - Example: `acl`, `selinux`, `firewalld`.
+
+### 11. **Windows Modules:**
+   - Manage Windows-specific tasks.
+   - Example: `win_user`, `win_group`, `win_shell`.
+
+### 12. **Utility Modules:**
+   - Perform various utility tasks.
+   - Example: `uri`, `assert`, `wait_for`, `debug`.
+
+### 13. **Fact Gathering Modules:**
+   - Gather system-related facts.
+   - Example: `setup`.
+
+These are some of the main types of modules in Ansible. Each module type is designed to handle specific tasks, making it easier for users to automate diverse operations on
+different types of systems and platforms. Ansible's modular design allows users to extend its functionality by creating custom modules tailored to their specific 
+requirements.
