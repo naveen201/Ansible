@@ -1,0 +1,17 @@
+System Modules:
+
+    command: Execute arbitrary shell commands on targets.
+    shell: Execute commands in a shell on targets.
+    copy: Copy files to remote hosts.
+    file: Manage files and file properties on remote hosts.
+    template: Template a file out to a remote server.
+    yum/apt/dnf/zypper: Package managers for various Linux distributions.
+    user/group: Manage user accounts and groups.
+    service: Manage services (start, stop, restart, etc.).
+    cron: Manage cron jobs on remote systems.
+    The Lineinfile / Replace Modules
+    unarchive -->extract the contents of archive files such as tar or zip files. By default, it copies the archive file from the control node to the target machine before 
+    extracting it.Change this behavior by providing the parameter remote_src: yes.
+
+    examp
+    
