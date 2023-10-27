@@ -1,0 +1,9 @@
+Installation points-
+1-add user
+2-edit this file ->/etc/ssh/sshd_config
+-->PermitRootLogin yes
+-->PasswordAuthentication yes
+3-create and copy ssh key master to node by usning new added user
+4-create host file by using root user
+-->/etc/ansible/hosts
+put here private ip of manage node
