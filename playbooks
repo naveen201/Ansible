@@ -1,0 +1,16 @@
+1##install httpd server
+---
+- hosts: demo
+  become: yes
+  tasks:
+
+    - name: Install Apache HTTP Server
+      yum: name=httpd state=present
+    - name: copy index file from host
+      copy: src=index.html dest=/var/www/html
+    - name: Start Apache service
+      service: name=httpd state=restarted
+    - name: Enable Apache service to start on boot
+      systemd: name=httpd enabled=yes state=started
+
+2##install nginx server
