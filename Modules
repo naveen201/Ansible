@@ -23,6 +23,8 @@ System Modules:
  Template module is used to copy a configuration file from the local system to the host server. It is the same as the copy module, but it dynamically binds group 
  variables defined by us. So it depends of your need but basically if you need to configure variables in the pushed file, use "template".
 
+systemd and service module in Ansible serve similar purposes—they both are used for managing services on Linux systems
+systemd module for modern systems and the service module for systems using traditional init systems.
 
 ==============================================================
 In Ansible, modules are categorized into different types based on the tasks they perform. Here are the main types of modules in Ansible:
