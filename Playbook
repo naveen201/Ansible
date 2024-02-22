@@ -1,0 +1,87 @@
+##################http
+
+---  
+- hosts: demo
+  become: yes
+  tasks:
+
+    - name: Install Apache HTTP Server
+      yum: name=httpd state=present
+    - name: Start Apache service
+      service: name=httpd state=started
+    - name: Enable Apache service to start on boot
+      service: name=httpd state=enabled
+
+---
+- name: Install Apache HTTP Server
+  hosts: demo
+  become: true  # Run tasks with root privileges
+
+  tasks:
+
+    - name: Install Apache HTTP Server
+      yum:
+        name: httpd
+        state: present
+      become: yes
+
+    - name: Start Apache service
+      service:
+        name: httpd
+        state: started
+      become: yes
+
+    - name: Enable Apache service to start on boot
+      service:
+        name: httpd
+        enabled: yes
+      become: yes
+  ===============================================================================
+  
+  
+  
+  nginx 
+  ===================================================================================
+---
+- name: Ensure Nginx is installed and running
+  hosts: web_servers
+  become: true  # Run tasks with elevated privileges (sudo)
+
+  tasks:
+    - name: Check if Nginx is installed
+      command: nginx -v
+      ignore_errors: true
+      register: nginx_check
+      changed_when: false
+
+    - name: Remove Nginx if installed
+      apt:
+        name: nginx
+        state: absent
+      when: nginx_check.rc == 0  # Remove only if Nginx is installed
+
+    - name: Download Nginx source in gzip format
+      get_url:
+        url: "http://nginx.org/download/nginx-1.21.3.tar.gz"
+        dest: "/tmp/nginx.tar.gz"
+
+    - name: Extract Nginx source
+      ansible.builtin.unarchive:
+        src: "/tmp/nginx.tar.gz"
+        dest: "/tmp"
+      become: true
+
+    - name: Configure and install Nginx from source
+      shell: |
+        cd /tmp/nginx-1.21.3 && ./configure --prefix=/usr/local/nginx && make && make install
+      become: true
+
+    - name: Start and enable Nginx service
+      systemd:
+        name: nginx
+        enabled: yes
+        state: started
+      become: true
+  
+  
+  
