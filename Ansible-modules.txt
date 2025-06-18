@@ -1,0 +1,457 @@
+1. Create a Directory
+yaml
+Copy
+Edit
+- name: Create a directory
+  file:
+    path: /tmp/mydir
+    state: directory
+    mode: '0755'
+2. Copy a File
+yaml
+Copy
+Edit
+- name: Copy a file
+  copy:
+    src: /source/file
+    dest: /destination/file
+    mode: '0644'
+3. Start a Service
+yaml
+Copy
+Edit
+- name: Start a service
+  service:
+    name: nginx
+    state: started
+4. Install a Package
+On Red Hat-based systems (using yum):
+
+yaml
+Copy
+Edit
+- name: Install a package on Red Hat
+  yum:
+    name: httpd
+    state: present
+On Debian-based systems (using apt):
+
+yaml
+Copy
+Edit
+- name: Install a package on Debian
+  apt:
+    name: nginx
+    state: present
+5. Add a Line to a File
+yaml
+Copy
+Edit
+- name: Add a line to /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "192.168.1.100 myserver"
+6. Replace Text in a File
+yaml
+Copy
+Edit
+- name: Replace text in a file
+  replace:
+    path: /path/to/file
+    regexp: 'oldtext'
+    replace: 'newtext'
+7. Fetch Files from Remote Nodes
+yaml
+Copy
+Edit
+- name: Fetch files from remote nodes
+  fetch:
+    src: /path/to/remote/file
+    dest: /path/to/local/destination
+    flat: yes
+8. Sync Directories
+yaml
+Copy
+Edit
+- name: Sync directories
+  synchronize:
+    src: /local/dir/
+    dest: /remote/dir/
+9. Add a Cron Job
+yaml
+Copy
+Edit
+- name: Add a cron job
+  cron:
+    name: "Backup job"
+    minute: "0"
+    hour: "2"
+    job: "/usr/bin/backup.sh"
+10. Manage Hostnames
+yaml
+Copy
+Edit
+- name: Set hostname
+  hostname:
+    name: myserver
+11. Open Firewall Ports
+yaml
+Copy
+Edit
+- name: Open port 80
+  firewalld:
+    port: 80/tcp
+    permanent: yes
+    state: enabled
+12. Manage Users
+yaml
+Copy
+Edit
+- name: Add a user
+  user:
+    name: john
+    state: present
+    shell: /bin/bash
+13. Gather System Information
+yaml
+Copy
+Edit
+- name: Get kernel version
+  command:
+    cmd: uname -r
+
+- name: Get disk usage
+  command:
+    cmd: df -h
+14. Mount a Filesystem
+yaml
+Copy
+Edit
+- name: Mount a filesystem
+  mount:
+    path: /mnt/data
+    src: /dev/sdb1
+    fstype: ext4
+    state: mounted
+15. Check Connectivity
+yaml
+Copy
+Edit
+- name: Test connectivity
+  ping:
+These are now using Ansible modules directly in the simplest format possible, with no references to ansible.builtin. They will work just as expected in a typical Ansible playbook.
+
+
+
+
+
+
+
+You said:
+give exapmle with all 30 modules and explain
+ChatGPT said:
+ChatGPT
+Here are examples of the 30 most useful Ansible modules (without using ansible.builtin) for common tasks, with a brief explanation of each.
+
+1. file (Manage files and directories)
+yaml
+Copy
+Edit
+- name: Create a directory
+  file:
+    path: /tmp/mydir
+    state: directory
+    mode: '0755'
+This module is used to manage file and directory properties, like permissions, ownership, and file type.
+
+2. copy (Copy files to remote machines)
+yaml
+Copy
+Edit
+- name: Copy a configuration file
+  copy:
+    src: /path/to/local/file.conf
+    dest: /etc/myapp/file.conf
+    mode: '0644'
+It copies files from the local system to remote machines. It allows setting file permissions as well.
+
+3. template (Manage templates)
+yaml
+Copy
+Edit
+- name: Template a file
+  template:
+    src: /path/to/template.j2
+    dest: /etc/myapp/file.conf
+This module uses Jinja2 templates to create files. Useful for configuring dynamic values based on variables.
+
+4. yum (Package manager for Red Hat-based systems)
+yaml
+Copy
+Edit
+- name: Install httpd package
+  yum:
+    name: httpd
+    state: present
+This installs, removes, or manages packages on Red Hat-based systems using the yum package manager.
+
+5. apt (Package manager for Debian-based systems)
+yaml
+Copy
+Edit
+- name: Install nginx package
+  apt:
+    name: nginx
+    state: present
+This installs, removes, or manages packages on Debian-based systems using the apt package manager.
+
+6. service (Manage services)
+yaml
+Copy
+Edit
+- name: Start nginx service
+  service:
+    name: nginx
+    state: started
+This manages services on remote systems, allowing you to start, stop, restart, or enable services.
+
+7. user (Manage users)
+yaml
+Copy
+Edit
+- name: Add a user
+  user:
+    name: john
+    state: present
+    shell: /bin/bash
+This module manages users on a system, including creating, removing, or updating users.
+
+8. group (Manage groups)
+yaml
+Copy
+Edit
+- name: Add a group
+  group:
+    name: devs
+    state: present
+This module manages groups on a system, allowing you to add, remove, or modify groups.
+
+9. lineinfile (Manage lines in a file)
+yaml
+Copy
+Edit
+- name: Add a line to /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "192.168.1.100 myserver"
+It ensures a particular line exists in a file, useful for modifying configuration files.
+
+10. replace (Replace text in a file)
+yaml
+Copy
+Edit
+- name: Replace text in a file
+  replace:
+    path: /path/to/file
+    regexp: 'oldtext'
+    replace: 'newtext'
+This module allows you to replace content in a file using regular expressions.
+
+11. cron (Manage cron jobs)
+yaml
+Copy
+Edit
+- name: Add a cron job
+  cron:
+    name: "Backup job"
+    minute: "0"
+    hour: "2"
+    job: "/usr/bin/backup.sh"
+This module manages cron jobs on the target system.
+
+12. mount (Mount filesystems)
+yaml
+Copy
+Edit
+- name: Mount a filesystem
+  mount:
+    path: /mnt/data
+    src: /dev/sdb1
+    fstype: ext4
+    state: mounted
+It ensures a filesystem is mounted or unmounted, and can also create mounts at system boot.
+
+13. firewalld (Manage firewall using firewalld)
+yaml
+Copy
+Edit
+- name: Open port 80
+  firewalld:
+    port: 80/tcp
+    permanent: yes
+    state: enabled
+This manages firewalld configurations on systems that use firewalld.
+
+14. ufw (Manage firewall using UFW)
+yaml
+Copy
+Edit
+- name: Allow port 22 on UFW
+  ufw:
+    rule: allow
+    name: ssh
+It manages firewall rules using the UFW firewall on systems like Ubuntu.
+
+15. git (Clone or manage Git repositories)
+yaml
+Copy
+Edit
+- name: Clone a Git repository
+  git:
+    repo: https://github.com/ansible/ansible.git
+    dest: /path/to/destination
+This module interacts with Git repositories to clone or pull updates.
+
+16. stat (Get file or directory status)
+yaml
+Copy
+Edit
+- name: Get file stats
+  stat:
+    path: /path/to/file
+It gathers details like file size, permissions, and ownership.
+
+17. command (Run a command on remote machines)
+yaml
+Copy
+Edit
+- name: Run a command
+  command:
+    cmd: echo "Hello World"
+This runs a command on a remote machine without using a shell.
+
+18. shell (Execute shell commands)
+yaml
+Copy
+Edit
+- name: Run a shell command
+  shell:
+    cmd: "ls /tmp"
+Similar to command, but allows shell features like pipes, redirects, etc.
+
+19. setup (Gather system facts)
+yaml
+Copy
+Edit
+- name: Gather system facts
+  setup:
+It gathers information about the system like IP, memory, disk space, etc.
+
+20. ping (Test connectivity)
+yaml
+Copy
+Edit
+- name: Test connectivity
+  ping:
+This module sends a simple ping to the remote machine and verifies if it's reachable.
+
+21. synchronize (Synchronize files or directories)
+yaml
+Copy
+Edit
+- name: Sync directories
+  synchronize:
+    src: /local/dir/
+    dest: /remote/dir/
+This module is useful for synchronizing directories between local and remote systems.
+
+22. wait_for (Wait for a condition before continuing)
+yaml
+Copy
+Edit
+- name: Wait for port 80 to open
+  wait_for:
+    host: 192.168.1.100
+    port: 80
+    state: started
+It waits for a particular condition, like a port being open or a file appearing, before continuing.
+
+23. user (Manage users)
+yaml
+Copy
+Edit
+- name: Ensure user is present
+  user:
+    name: john
+    state: present
+    shell: /bin/bash
+It ensures a user is present on a system.
+
+24. include_vars (Include variables from a file)
+yaml
+Copy
+Edit
+- name: Include variables
+  include_vars:
+    file: vars.yml
+This module loads variables from an external file and makes them available to your playbook.
+
+25. wait_for_connection (Wait until a node is reachable)
+yaml
+Copy
+Edit
+- name: Wait for node to be reachable
+  wait_for_connection:
+It waits for a host to be ready and reachable before continuing the playbook.
+
+26. block (Group tasks together)
+yaml
+Copy
+Edit
+- name: Group tasks into a block
+  block:
+    - name: Install nginx
+      yum:
+        name: nginx
+        state: present
+    - name: Start nginx
+      service:
+        name: nginx
+        state: started
+This module allows grouping of tasks into blocks that can be managed together.
+
+27. pause (Pause playbook execution)
+yaml
+Copy
+Edit
+- name: Pause for 10 seconds
+  pause:
+    seconds: 10
+This module pauses the execution of your playbook for a specified time.
+
+28. assert (Assert that a condition is true)
+yaml
+Copy
+Edit
+- name: Assert condition
+  assert:
+    that:
+      - ansible_facts['distribution'] == "Ubuntu"
+It asserts that a condition is true, and will fail the playbook if the condition is not met.
+
+29. debug (Print debug messages)
+yaml
+Copy
+Edit
+- name: Print debug message
+  debug:
+    msg: "The system is {{ ansible_facts['distribution'] }}"
+It prints debugging information to help with playbook troubleshooting.
+
+30. import_tasks (Import tasks from other files)
+yaml
+Copy
+Edit
+- name: Import tasks
+  import_tasks: tasks.yml
+This module imports a set of tasks from another file and executes them in the playbook.
