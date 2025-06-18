@@ -1,0 +1,58 @@
+   to Retry Failed Tasks in Ansible?
+In Ansible, you can retry failed tasks using two main approaches:
+
+1-Manual Retry using --limit @retryfile.retry
+🔹 This ensures that only the hosts that failed in the last execution will be retried.
+🔹 The retry file contains a list of failed hosts.
+2-Automatic Retry using retries and delay in the playbook
+
+3-Handling Failures Gracefully
+Ignore Errors (ignore_errors: yes)
+Control Failure with failed_when
+
+============================================================
+How do you ensure idempotency in Ansible playbooks?
+✅ Use modules (apt, copy, template, etc.) instead of commands
+✅ Use state: present / state: absent
+✅ Use handlers for restarting services
+✅ Avoid unnecessary changes with when, register, and changed_when
+✅ Test with --check before applying changes
+=============================================================
+How do you execute a task on a set of servers in parallel?
+Use forks in ansible.cfg.
+
+=============================================================
+How can you run tasks only on a specific host in Ansible?
+Use delegate_to
+
+=============================================================
+Difference Between import_tasks and include_tasks in Ansible
+Both import_tasks(Static Import) and include_tasks(Dynamic Inclusion) are used to include tasks from another file inside an Ansible playbook or role.
+Use import_tasks when you want to predefine tasks that always run.
+Use include_tasks when you need dynamic behavior based on conditions.
+
+
+==============================================================
+How to Speed Up Ansible Execution 
+Increase forks in ansible.cfg → Run more tasks in parallel.
+Use async & poll → Avoid waiting for long-running tasks.
+Use serial → Execute tasks in batches instead of all at once.
+Enable pipelining → Reduce SSH overhead for faster execution.
+Disable gather_facts if not needed → Saves time by skipping fact collection.
+Use free strategy → Execute tasks independently without waiting for all hosts.
+Use raw for initial package installs → Avoid unnecessary dependencies.
+Optimize task execution with changed_when & check_mode → Prevent unnecessary changes.
+
+==============================================================
+some real-world Ansible production issues and their solutions:
+
+issue								  		 cause											solution
+SSH Authentication Failure	  			 Wrong SSH user or missing key						Use ansible_user and ssh-copy-id
+Playbook Hangs               			 Long-running tasks	           						Use async and increase timeout
+Unreachable Hosts	        			 Network issues	        							Use ignore_unreachable: yes
+Package Manager Lock		  			 Another process is using apt/yum		    		Use fuser to check lock and retry
+Invalid Jinja2 Template	      			 Syntax errors or undefined vars	            	Use default() in templates
+Playbook Doesn't Apply Changes			 Incorrect state or changed_when					Use debug and enforce changes
+Ansible Vault Decryption Failure		 Wrong password										Use --ask-vault-pass
+
+
